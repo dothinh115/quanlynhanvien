@@ -3,11 +3,7 @@ function getEle (id) {
 }
 
 var dsnv = new DSNV();
-
-if(getLocalStorage() > 0) {
-    renderTable();
-}
-
+getLocalStorage();
 function thongTinNV () {
     var chucVuOption = getEle("chucvu").querySelectorAll("option");
     chucVuOption.forEach(function(item, index) {
@@ -145,7 +141,9 @@ function getLocalStorage () {
     var data = localStorage.getItem("DSNV");
     var dataToJSON = JSON.parse(data);
     dsnv.arr = dataToJSON;
-    return data.length;
+    if (data) {
+        renderTable();
+    }
 }
 
 getEle("btnThemNV").addEventListener("click", function() {

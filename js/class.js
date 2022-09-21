@@ -267,15 +267,52 @@ function DSNV () {
             }
         }
         
+        //VALIDATION CHO QUICK EDIT
+        var date = editedNhanVien.ngayLam.split("/");
+        var thang = date[0];
+        ngay = date[1];
+        nam = date[2];
+
         if (check > 0) {
             alert("Tài khoản đã tồn tại!");
             editValid = false;
         }
-        else if(!emailValid(editedNhanVien.email)) {
-            alert("Email phải đúng định dạng!");
+        else if(editedNhanVien.taiKhoan.length === 0 || editedNhanVien.taiKhoan.length < 4 || editedNhanVien.taiKhoan.length > 6) {
+            alert("Tài khoản từ 4 - 6 ký tự, không được để trống!");
             editValid = false;
         }
-        else {
+        else if(!emailValid(editedNhanVien.email) || editedNhanVien.email.length === 0) {
+            alert("Email phải đúng định dạng và không được bỏ trống!");
+            editValid = false;
+        }
+        else if(editedNhanVien.ngayLam.length === 0) {
+            alert("Ngày tháng không được để trống!");
+            editValid = false;
+        }
+        else if(date.length < 3) {
+            alert("Định dạng mm/dd/yyyy!");
+            editValid = false;
+        }
+        else if(ngay < 1 || ngay > 31 || thang < 0 || thang > 12) {
+            alert("Điền ngày tháng cho hợp lý!");
+            editValid = false;
+        }
+        else if(thang == 2) {
+            if (nam%4 === 0) {
+                if(ngay > 29) {
+                    alert("Năm nhuận tháng 2 có 29 ngày thôi!");
+                    editValid = false;
+                }
+            }
+            else {
+                if(ngay > 28) {
+                    alert("Tháng 2 có 28 ngày thôi!");
+                    editValid = false;
+                }
+            }
+        }
+        
+        if(editValid) {
             this.arr[quickEditIndex] = editedNhanVien;
         }
         return editValid;
@@ -283,12 +320,19 @@ function DSNV () {
 
     //HÀM SỬA
     this.edit = function (editedNhanVien) {
-        var i = 0;
+        var i = -1;
         this.arr.forEach(function(item, index) {
             if(item.taiKhoan === editedNhanVien.taiKhoan) {
                 i = index;
             }
         });
-        this.arr[i] = editedNhanVien;
+
+        if(i != -1) {
+            this.arr[i] = editedNhanVien;
+        }
+        else {
+            getEle("tbTKNV").style.display = "block";
+            getEle("tbTKNV").innerText = "Không tìm thấy nhân viên này!";
+        }
     }
 }
