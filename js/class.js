@@ -209,11 +209,13 @@ function DSNV () {
     this.themNhanVien = function (nhanVienArr) {
         //KIỂM TRA TÀI KHOẢN ĐÃ TỒN TẠI
         var validCheck = true;
-        this.arr.forEach(function(item, index) {
-            if(nhanVienArr.taiKhoan === item.taiKhoan) {
-                validCheck = false;
-            }
-        });
+        if(this.arr.length > 0) {
+            this.arr.forEach(function(item) {
+                if(nhanVienArr.taiKhoan === item.taiKhoan) {
+                    validCheck = false;
+                }
+            });
+        }
         if(validCheck) {
             this.arr.push(nhanVienArr);
         }

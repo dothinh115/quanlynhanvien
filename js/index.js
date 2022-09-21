@@ -49,7 +49,6 @@ function renderTable () {
         <td>
             <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${item.taiKhoan}', ${index})">Sửa</button>
             <br>
-            <br>
             <button class="btn btn-danger" onclick="xoaNhanVien('${item.taiKhoan}')">Xóa</button>
         </td>
         </tr>
