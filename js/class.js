@@ -209,13 +209,10 @@ function DSNV () {
     //HÀM THÊM NHÂN VIÊN
     this.themNhanVien = function (nhanVienArr) {
         //KIỂM TRA TÀI KHOẢN ĐÃ TỒN TẠI
-        var validCheck = true;
-        this.arr.forEach(function(item) {
-            if(nhanVienArr.taiKhoan === item.taiKhoan) {
-                validCheck = false;
-            }
+        var validCheck = this.arr.find(function(sort) {
+            return sort.taiKhoan == nhanVienArr.taiKhoan;
         });
-        if(validCheck) {
+        if(validCheck.length == 0) {
             this.arr.push(nhanVienArr);
         }
         else {
@@ -230,9 +227,7 @@ function DSNV () {
             return sort.taiKhoan == tkNV;
         });
         
-        if(flag != -1) {
-            this.arr.splice(flag, 1);
-        }
+        this.arr.splice(flag, 1);
     }
 
     //HÀM LẤY THÔNG TIN
