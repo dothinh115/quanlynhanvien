@@ -4,6 +4,17 @@ function getEle (id) {
 
 var dsnv = new DSNV();
 getLocalStorage();
+
+nhacNho();
+
+function nhacNho () {
+    var loiNhacNho = localStorage.getItem("loiNhacNho");
+    if (!loiNhacNho) {
+        alert("Em có làm thêm phần quick edit, Mentor cho thêm điểm em nghen!");
+        localStorage.setItem("loiNhacNho", true);
+    }
+}
+
 function thongTinNV () {
     var chucVuOption = getEle("chucvu").querySelectorAll("option");
     chucVuOption.forEach(function(item, index) {
