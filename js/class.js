@@ -277,7 +277,7 @@ function DSNV () {
             alert("Ngày tháng không được để trống!");
             editValid = false;
         }
-        else if(date.length < 3) {
+        else if(ngay == "" || thang == "" || nam == "") {
             alert("Định dạng mm/dd/yyyy!");
             editValid = false;
         }
