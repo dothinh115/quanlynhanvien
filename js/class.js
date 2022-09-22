@@ -43,7 +43,8 @@ function NhanVien (
     }
 
     this.tinhLuong = function () {
-        this.tongLuong = this.luongCoBan * _chucVu;
+        var formatVND = new Intl.NumberFormat("VN-vn");
+        this.tongLuong = formatVND.format(this.luongCoBan * _chucVu) + " VNĐ";
     }
 }
 
@@ -209,13 +210,11 @@ function DSNV () {
     this.themNhanVien = function (nhanVienArr) {
         //KIỂM TRA TÀI KHOẢN ĐÃ TỒN TẠI
         var validCheck = true;
-        if(this.arr.length > 0) {
-            this.arr.forEach(function(item) {
-                if(nhanVienArr.taiKhoan === item.taiKhoan) {
-                    validCheck = false;
-                }
-            });
-        }
+        this.arr.forEach(function(item) {
+            if(nhanVienArr.taiKhoan === item.taiKhoan) {
+                validCheck = false;
+            }
+        });
         if(validCheck) {
             this.arr.push(nhanVienArr);
         }
@@ -227,11 +226,8 @@ function DSNV () {
 
     //HÀM XÓA NHÂN VIÊN
     this.xoaNhanVien = function (tkNV) {
-        var flag = -1;
-        this.arr.forEach(function(item, index) {
-            if(tkNV === item.taiKhoan) {
-                flag = index;
-            }
+        var flag = this.arr.findIndex(function(sort) {
+            return sort.taiKhoan == tkNV;
         });
         
         if(flag != -1) {
@@ -241,24 +237,19 @@ function DSNV () {
 
     //HÀM LẤY THÔNG TIN
     this.layThongTinNV = function (tk) {
-        var i = 0;
-        this.arr.forEach(function(item, index) {
-            if(tk === item.taiKhoan) {
-                i = index;
-            }
+        var thongTinNV = this.arr.find(function(sort) {
+            return sort.taiKhoan == tk;
         });
-        return this.arr[i];
+        return thongTinNV;
     }
 
     //HÀM SỬA NHANH  
     this.quickEdit = function (taiKhoanCu, editedNhanVien) {
         var editValid = true;
-        var quickEditIndex = -1;
-        this.arr.forEach(function(item, index) {
-            if(taiKhoanCu == item.taiKhoan) {
-                quickEditIndex = index;
-            }
+        quickEditIndex = this.arr.findIndex(function(findExample) {
+            return findExample.taiKhoan == taiKhoanCu;
         });
+        
         var check = 0;
         for (var i = 0; i < this.arr.length; i++) {
             if(i == quickEditIndex) {
@@ -322,19 +313,44 @@ function DSNV () {
 
     //HÀM SỬA
     this.edit = function (editedNhanVien) {
-        var i = -1;
-        this.arr.forEach(function(item, index) {
-            if(item.taiKhoan === editedNhanVien.taiKhoan) {
-                i = index;
-            }
+        var index = this.arr.findIndex(function(sort) {
+            return sort.taiKhoan == editedNhanVien.taiKhoan;
         });
-
-        if(i != -1) {
-            this.arr[i] = editedNhanVien;
+        if(index != -1) {
+            this.arr[index] = editedNhanVien;
         }
         else {
             getEle("tbTKNV").style.display = "block";
             getEle("tbTKNV").innerText = "Không tìm thấy nhân viên này!";
         }
+    }
+
+    //HÀM SORT
+    this.sortNV = function (value) {
+        var filter;
+        if(value == 0) {
+            filter = this.arr;
+        }
+        else if(value == 1) {
+            filter = this.arr.filter(function(filterExample) {
+                return filterExample.gioLam >= 192;
+            });
+        }
+        else if (value == 2) {
+            filter = this.arr.filter(function(filterExample) {
+                return filterExample.gioLam < 192 && filterExample.gioLam >= 176;
+            });
+        }
+        else if (value == 3) {
+            filter = this.arr.filter(function(filterExample) {
+                return filterExample.gioLam < 176 && filterExample.gioLam >= 160;
+            });
+        }
+        else if(value == 4) {
+            filter = this.arr.filter(function(filterExample) {
+                return filterExample.gioLam < 160;
+            });
+        }
+        return filter;
     }
 }

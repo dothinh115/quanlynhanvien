@@ -33,10 +33,10 @@ function thongTinNV () {
     return nhanVien;
 }
 
-function renderTable () {
+function renderTable (arr) {
     var table = getEle("tableDanhSach");
     var tableInner = "";
-    dsnv.arr.forEach(function(item, index) {
+    arr.forEach(function(item, index) {
         tableInner += `
         <tr>
         <td>${item.taiKhoan}</td>
@@ -60,7 +60,7 @@ function renderTable () {
 function xoaNhanVien (tk) {
     dsnv.xoaNhanVien(tk);
     setLocalStorage();
-    renderTable();
+    renderTable(dsnv.arr)
 }
 
 function quickEditInfo (tk, index) {
@@ -127,7 +127,7 @@ function quickEdit (tk, index) {
     editedNhanVien.tinhLuong();
     if(dsnv.quickEdit(tk, editedNhanVien)) {
         setLocalStorage();
-        renderTable();
+        renderTable(dsnv.arr)
     }
 }
 
@@ -141,7 +141,7 @@ function getLocalStorage () {
     var dataToJSON = JSON.parse(data);
     dsnv.arr = dataToJSON;
     if (data) {
-        renderTable();
+        renderTable(dsnv.arr)
     }
 }
 
@@ -149,7 +149,7 @@ getEle("btnThemNV").addEventListener("click", function() {
     var nhanVien = thongTinNV();
     if(dsnv.validation(nhanVien)) {
         dsnv.themNhanVien(nhanVien);
-        renderTable();
+        renderTable(dsnv.arr)
         setLocalStorage();
     }
 });
@@ -158,7 +158,13 @@ getEle("btnCapNhat").addEventListener("click", function() {
     var capNhatNV = thongTinNV();
     if(dsnv.validation(capNhatNV)) {
         dsnv.edit(capNhatNV);
-        renderTable();
+        renderTable(dsnv.arr)
         setLocalStorage();
     }
+});
+
+getEle("btnTimNV").addEventListener("click", function(){
+    var seachValue = getEle("searchName").value;
+    var sortList = dsnv.sortNV(seachValue);
+    renderTable(sortList);
 });
