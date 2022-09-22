@@ -284,7 +284,7 @@ function quickEditInfo (tk, index) {
         table.querySelectorAll(".editChucVu option")[3].setAttribute("selected", "selected");
     }
     table.cells[7].innerHTML = `
-        <button class="btn btn-success" onclick="quickEdit(${tk}, ${index})"><i class="fa-solid fa-check"></i></button>
+        <button class="btn btn-success" onclick="quickEdit('${tk}', ${index})"><i class="fa-solid fa-check"></i></button>
     `;
 }
 
