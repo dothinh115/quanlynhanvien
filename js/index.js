@@ -160,6 +160,7 @@ function renderTable (arr, urlData) {
     var pagi = getEle("ulPhanTrang");
     var pagiInner = "";
     var url = pageURL();
+    var rowInfo = getEle("rowInfo");
 
     if(url.page == 1) {
         if(pagiInfo.page == 1) {
@@ -220,9 +221,18 @@ function renderTable (arr, urlData) {
             }
         }
     }
-
+    var rowInfoText = "";
+    if(url.page != pagiInfo.page) {
+        rowInfoText += (pagiInfo.perPage * url.page);
+    }
+    else {
+        rowInfoText += pagiInfo.total;
+    }
+    rowInfoText += " trên tổng số ";
+    rowInfoText += pagiInfo.total;
+    rowInfoText += " nhân viên.";
+    rowInfo.innerText = rowInfoText;
     pagi.innerHTML = pagiInner;
-    
     table.innerHTML = tableInner;
 }
 
