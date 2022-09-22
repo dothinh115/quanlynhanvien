@@ -47,7 +47,8 @@ function thongTinNV () {
 function renderTable (arr) {
     var table = getEle("tableDanhSach");
     var tableInner = "";
-    arr.forEach(function(item, index) {
+    
+        arr.forEach(function(item, index) {
         tableInner += `
         <tr>
         <td>${item.taiKhoan}</td>
@@ -65,6 +66,7 @@ function renderTable (arr) {
         </tr>
         `;
     });
+    
     table.innerHTML = tableInner;
 }
 

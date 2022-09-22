@@ -299,6 +299,10 @@ function DSNV () {
                 }
             }
         }
+        else if(editedNhanVien.chucVu == 0) {
+            alert("Chọn chức vụ đã!");
+            editValid = false;
+        }
         
         if(editValid) {
             this.arr[quickEditIndex] = editedNhanVien;
