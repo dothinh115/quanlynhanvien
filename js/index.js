@@ -59,9 +59,9 @@ function renderTable (arr) {
         <td>${item.tongLuong}</td>
         <td>${item.loaiNV}</td>
         <td>
-            <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${item.taiKhoan}', ${index})">Sửa</button>
+            <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${item.taiKhoan}', ${index})"><i class="fa-solid fa-pen-to-square"></i></button>
             <br>
-            <button class="btn btn-danger" onclick="xoaNhanVien('${item.taiKhoan}')">Xóa</button>
+            <button class="btn btn-danger" onclick="xoaNhanVien('${item.taiKhoan}', ${index})"><i class="fa-solid fa-trash"></i></button>
         </td>
         </tr>
         `;
@@ -70,10 +70,10 @@ function renderTable (arr) {
     table.innerHTML = tableInner;
 }
 
-function xoaNhanVien (tk) {
+function xoaNhanVien (tk, index) {
     dsnv.xoaNhanVien(tk);
     setLocalStorage();
-    renderTable(dsnv.arr)
+    getEle("tableDanhSach").rows[index].remove();
 }
 
 function quickEditInfo (tk, index) {
@@ -111,7 +111,7 @@ function quickEditInfo (tk, index) {
         table.querySelectorAll(".editChucVu option")[3].setAttribute("selected", "selected");
     }
     table.cells[7].innerHTML = `
-        <button class="btn btn-success" onclick="quickEdit(${tk}, ${index})">Xong</button>
+        <button class="btn btn-success" onclick="quickEdit(${tk}, ${index})"><i class="fa-solid fa-check"></i></button>
     `;
 }
 
@@ -140,7 +140,22 @@ function quickEdit (tk, index) {
     editedNhanVien.tinhLuong();
     if(dsnv.quickEdit(tk, editedNhanVien)) {
         setLocalStorage();
-        renderTable(dsnv.arr)
+        table.innerHTML = `
+            <tr>
+            <td>${editedNhanVien.taiKhoan}</td>
+            <td>${editedNhanVien.hoTen}</td>
+            <td>${editedNhanVien.email}</td>
+            <td>${editedNhanVien.ngayLam}</td>
+            <td>${editedNhanVien.chucVu}</td>
+            <td>${editedNhanVien.tongLuong}</td>
+            <td>${editedNhanVien.loaiNV}</td>
+            <td>
+                <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${editedNhanVien.taiKhoan}', ${index})"><i class="fa-solid fa-pen-to-square"></i></button>
+                <br>
+                <button class="btn btn-danger" onclick="xoaNhanVien('${editedNhanVien.taiKhoan}')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+            </tr>
+        `;
     }
 }
 
