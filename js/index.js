@@ -48,12 +48,17 @@ function thongTinNV () {
 function pageURL () {
     var url = window.location.href;
     var urlData = url.split("?search=")[1];
+
     if(urlData == undefined) {
         window.location.replace("./?search=0&page=1");
     }
     else {
         urlSearch = urlData.split("&page=")[0];
         var urlPage = urlData.split("&page=")[1];
+        if(urlPage == undefined) {
+            window.location.replace("./?search=" + urlSearch + "&page=1");
+        }
+    
     }
     var infoObject = {
         search: urlSearch,
@@ -188,8 +193,7 @@ function renderTable (arr, urlData) {
             if (k == url.page) {
                 active = "active";
             }
-            pagiInner += `
-            <li class="page-item ${active}">`;
+            pagiInner += `<li class="page-item ${active}">`;
             pagiInner += `<a class="page-link" href="./?search=${urlData}&page=${k}">`;pagiInner +=`${k}</a></li>`;
         }
         if(url.page == pagiInfo.page) {
@@ -222,7 +226,6 @@ function xoaNhanVien (tk) {
     else {
         renderTable(dsnv.sortNV(url.search), url.search);
     }
-        
 }
 
 function quickEditInfo (tk, index) {
@@ -300,11 +303,13 @@ function setLocalStorage () {
 
 function getLocalStorage () {
     var data = localStorage.getItem("DSNV");
-    var dataToJSON = JSON.parse(data);
-    dsnv.arr = dataToJSON;
-    var url = pageURL();
-    renderTable(dsnv.sortNV(url.search), url.search);
-    getEle("searchName").querySelectorAll("option")[url.search].setAttribute("selected", "selected");
+    if(data) {
+        var dataToJSON = JSON.parse(data);
+        dsnv.arr = dataToJSON;
+        var url = pageURL();
+        renderTable(dsnv.sortNV(url.search), url.search);
+        getEle("searchName").querySelectorAll("option")[url.search].setAttribute("selected", "selected");
+    }
 }
 
 getEle("btnThemNV").addEventListener("click", function() {
