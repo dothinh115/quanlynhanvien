@@ -68,7 +68,7 @@ function pageURL () {
 }
 
 function pagination (arr) {
-    var perPage = 5; //hiển thị mỗi trang
+    var perPage = 10; //hiển thị mỗi trang
     var total = arr.length; //Tổng cộng item
     var page = 0; //Tổng số trang
     var lastPageItem = 0; //Item ở trang cuối cùng
@@ -113,10 +113,9 @@ function createRow (arr, number, isObject) {
                 onclick="this.remove();quickEditInfo('${arr[number].taiKhoan}', ${number})">
                 <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <br>
                 <button 
-                class="btn btn-danger" 
-                onclick="xoaNhanVien('${arr[number].taiKhoan}')">
+                class="btn btn-warning" 
+                onclick="xoaNhanVien('${arr[number].taiKhoan}', ${number})">
                 <i class="fa-solid fa-trash"></i>
                 </button>
             </td>
@@ -139,10 +138,9 @@ function createRow (arr, number, isObject) {
                 onclick="this.remove();quickEditInfo('${arr.taiKhoan}', ${number})">
                 <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <br>
                 <button 
-                class="btn btn-danger" 
-                onclick="xoaNhanVien('${arr.taiKhoan}')">
+                class="btn btn-warning" 
+                onclick="xoaNhanVien('${arr.taiKhoan}', ${number})">
                 <i class="fa-solid fa-trash"></i>
                 </button>
             </td>
@@ -209,13 +207,13 @@ function renderTable (arr, urlData) {
             pagiInner +=`</li>`;
         }
         if(url.page == pagiInfo.page) {
-            for (var i = (url.page * pagiInfo.perPage) - 4; i <= pagiInfo.total; i++) {
+            for (var i = (url.page * pagiInfo.perPage) - (pagiInfo.perPage - 1); i <= pagiInfo.total; i++) {
                 var j = i - 1;
                 tableInner += createRow(arr, j, true);
             }
         }
         else {
-            for (var i = (url.page * pagiInfo.perPage) - 4; i <= url.page * pagiInfo.perPage; i++) {
+            for (var i = (url.page * pagiInfo.perPage) - (pagiInfo.perPage - 1); i <= url.page * pagiInfo.perPage; i++) {
                 var j = i - 1;
                 tableInner += createRow(arr, j, true);
             }
@@ -236,10 +234,19 @@ function renderTable (arr, urlData) {
     table.innerHTML = tableInner;
 }
 
-function xoaNhanVien (tk) {
+function xoaNhanVien (tk, index) {
+    var table = getEle("rowIndex__" + index);
+    table.cells[7].innerHTML = `
+        <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${tk}', ${index})"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="btn btn-warning" onclick="xoaNhanVienConfirmed('${tk}')"><i class="fa-solid fa-check"></i></button>
+    `;
+    
+}
+
+function xoaNhanVienConfirmed (tk) {
+    var url = pageURL();
     dsnv.xoaNhanVien(tk);
     setLocalStorage();
-    var url = pageURL();
     var paGi = pagination(dsnv.sortNV(url.search));
     if(paGi.total%paGi.perPage === 0) {
         window.location.replace("./?search=" + url.search + "&page=" + paGi.page);
