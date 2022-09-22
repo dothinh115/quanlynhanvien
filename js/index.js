@@ -152,7 +152,7 @@ function quickEdit (tk, index) {
             <td>
                 <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${editedNhanVien.taiKhoan}', ${index})"><i class="fa-solid fa-pen-to-square"></i></button>
                 <br>
-                <button class="btn btn-danger" onclick="xoaNhanVien('${editedNhanVien.taiKhoan}')"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-danger" onclick="xoaNhanVien('${editedNhanVien.taiKhoan}', ${index})"><i class="fa-solid fa-trash"></i></button>
             </td>
             </tr>
         `;
