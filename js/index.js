@@ -178,7 +178,12 @@ function renderTable (arr, urlData) {
                     active = "active";
                 }
                 pagiInner += `<li class="page-item ${active}">`;
-                pagiInner += `<a class="page-link" href="./?search=${urlData}&page=${i}">`;
+                if (i == 1) {
+                    pagiInner += `<a class="page-link disabled">`;
+                }
+                else{
+                    pagiInner += `<a class="page-link" href="./?search=${urlData}&page=${i}">`;
+                }
                 pagiInner += `${i}</a></li>`;
             }
             for (var j = 1; j <= pagiInfo.perPage; j++) {
@@ -194,7 +199,13 @@ function renderTable (arr, urlData) {
                 active = "active";
             }
             pagiInner += `<li class="page-item ${active}">`;
-            pagiInner += `<a class="page-link" href="./?search=${urlData}&page=${k}">`;pagiInner +=`${k}</a></li>`;
+            if (k == url.page) {
+                pagiInner += `<a class="page-link disabled">${k}</a>`;
+            }
+            else{
+                pagiInner += `<a class="page-link" href="./?search=${urlData}&page=${k}">${k}</a>`;
+            }
+            pagiInner +=`</li>`;
         }
         if(url.page == pagiInfo.page) {
             for (var i = (url.page * pagiInfo.perPage) - 4; i <= pagiInfo.total; i++) {
