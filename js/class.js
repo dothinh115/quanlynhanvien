@@ -212,7 +212,7 @@ function DSNV () {
         var validCheck = this.arr.find(function(sort) {
             return sort.taiKhoan == nhanVienArr.taiKhoan;
         });
-        if(validCheck.length == 0) {
+        if(validCheck == undefined) {
             this.arr.push(nhanVienArr);
         }
         else {
