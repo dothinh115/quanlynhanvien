@@ -99,7 +99,7 @@ function createRow (arr, number, isObject) {
     var row;
     if(isObject) {
         row = `
-            <tr>
+            <tr id="rowIndex__${number}">
             <td>${arr[number].taiKhoan}</td>
             <td>${arr[number].hoTen}</td>
             <td>${arr[number].email}</td>
@@ -125,7 +125,7 @@ function createRow (arr, number, isObject) {
     } 
     else {
         row = `
-            <tr>
+            <tr id="rowIndex__${number}">
             <td>${arr.taiKhoan}</td>
             <td>${arr.hoTen}</td>
             <td>${arr.email}</td>
@@ -235,7 +235,7 @@ function quickEditInfo (tk, index) {
     var email = thongTinNV.email;
     var ngayLam = thongTinNV.ngayLam;
     var chucVu = thongTinNV.chucVu;
-    var table  = getEle("tableDanhSach").rows[index];
+    var table  = getEle("rowIndex__" + index);
     table.cells[0].innerHTML = `<input class="form-control input-sm"
     value="${taiKhoan}">`;
     table.cells[1].innerHTML = `<input class="form-control input-sm"
