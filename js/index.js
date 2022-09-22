@@ -279,7 +279,7 @@ function quickEditInfo (tk, index) {
 }
 
 function quickEdit (tk, index) {
-    var table  = getEle("tableDanhSach").rows[index];
+    var table  = getEle("rowIndex__" + index);
     var thongTinNV = dsnv.layThongTinNV(tk);
     var editedTaiKhoan = table.cells[0].querySelectorAll("input")[0].value;
     var editedHoTen = table.cells[1].querySelectorAll("input")[0].value;
