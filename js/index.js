@@ -244,10 +244,10 @@ function xoaNhanVien (tk, index) {
 }
 
 function xoaNhanVienConfirmed (tk) {
-    var url = pageURL();
-    var paGi = pagination(dsnv.sortNV(url.search));
     dsnv.xoaNhanVien(tk);
     setLocalStorage();
+    var url = pageURL();
+    var paGi = pagination(dsnv.sortNV(url.search));
     if(paGi.total%paGi.perPage === 0) {
         window.location.replace("./?search=" + url.search + "&page=" + paGi.page);
     }
