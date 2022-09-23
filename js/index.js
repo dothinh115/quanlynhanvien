@@ -5,23 +5,10 @@ function getEle (id) {
 var dsnv = new DSNV();
 
 window.addEventListener("load", function() {
-    var url = window.location.href;
-    var urlData = url.split("?search=")[1];
-    if(urlData == undefined) {
-        window.location.replace("./?search=0&page=1");
-    }
-    else {
-        urlSearch = urlData.split("&page=")[0];
-        var urlPage = urlData.split("&page=")[1];
-        if(urlPage == undefined) {
-            window.location.replace("./?search=" + urlSearch + "&page=1");
-        }
-    }
+    pageURL();
     getLocalStorage();
     nhacNho();
 });
-
-
 
 function nhacNho () {
     var loiNhacNho = localStorage.getItem("loiNhacNho");
@@ -63,7 +50,6 @@ function thongTinNV () {
 function pageURL () {
     var url = window.location.href;
     var urlData = url.split("?search=")[1];
-
     if(urlData == undefined) {
         window.location.replace("./?search=0&page=1");
     }
@@ -312,6 +298,8 @@ function quickEditInfo (tk, index) {
         table.querySelectorAll(".editChucVu option")[3].setAttribute("selected", "selected");
     }
     table.cells[7].innerHTML = `
+        <button class="btn btn-info" onclick="callEditModal('${tk}', ${index})" data-toggle="modal"
+        data-target="#myModal"><i class="fa-solid fa-user-pen"></i></button>
         <button class="btn btn-success" onclick="quickEdit('${tk}', ${index})"><i class="fa-solid fa-check"></i></button>
     `;
 }
@@ -371,6 +359,28 @@ getEle("btnThemNV").addEventListener("click", function() {
     }
 });
 
+function callEditModal (tk, index) {
+    var capNhatNV = dsnv.layThongTinNV(tk);
+    getEle("tknv").value = capNhatNV.taiKhoan;
+    getEle("name").value = capNhatNV.hoTen;
+    getEle("email").value = capNhatNV.email;
+    getEle("password").value = capNhatNV.matKhau;
+    getEle("datepicker").value = capNhatNV.ngayLam;
+    getEle("luongCB").value = capNhatNV.luongCoBan;
+    if(capNhatNV.chucVu == "Nhân viên") {
+        getEle("chucvu").querySelectorAll("option")[1].setAttribute("selected", "selected");
+    }
+    else if (chucVu == "Trưởng phòng") {
+        getEle("chucvu").querySelectorAll("option")[2].setAttribute("selected", "selected");
+    }
+    else if (chucVu == "Sếp") {
+        getEle("chucvu").querySelectorAll("option")[3].setAttribute("selected", "selected");
+    }
+    getEle("gioLam").value = capNhatNV.gioLam;
+    getEle("btnCapNhat").style.display = "inline";
+    getEle("btnThemNV").style.display = "none";
+}
+
 getEle("btnCapNhat").addEventListener("click", function() {
     var capNhatNV = thongTinNV();
     if(dsnv.validation(capNhatNV)) {
@@ -384,4 +394,14 @@ getEle("btnCapNhat").addEventListener("click", function() {
 getEle("btnTimNV").addEventListener("click", function(){
     var searchValue = getEle("searchName").value;
     window.location.replace("./?search=" + searchValue + "&page=1");
+});
+
+getEle("btnThem").addEventListener("click", function() {
+    getEle("btnCapNhat").style.display = "none";
+    getEle("btnThemNV").style.display = "inline";
+    var modal = document.querySelector(".modal-body");
+    var input = modal.querySelectorAll("input");
+    input.forEach(function(item) {
+        item.value = "";
+    });
 });
