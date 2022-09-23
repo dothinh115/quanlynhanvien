@@ -4,9 +4,24 @@ function getEle (id) {
 
 var dsnv = new DSNV();
 
-getLocalStorage();
+window.addEventListener("load", function() {
+    getLocalStorage();
+    nhacNho();
+    var url = window.location.href;
+    var urlData = url.split("?search=")[1];
+    if(urlData == undefined) {
+        window.location.replace("./?search=0&page=1");
+    }
+    else {
+        urlSearch = urlData.split("&page=")[0];
+        var urlPage = urlData.split("&page=")[1];
+        if(urlPage == undefined) {
+            window.location.replace("./?search=" + urlSearch + "&page=1");
+        }
+    }
+});
 
-nhacNho();
+
 
 function nhacNho () {
     var loiNhacNho = localStorage.getItem("loiNhacNho");
@@ -58,7 +73,6 @@ function pageURL () {
         if(urlPage == undefined) {
             window.location.replace("./?search=" + urlSearch + "&page=1");
         }
-    
     }
     var infoObject = {
         search: urlSearch,
@@ -352,7 +366,7 @@ getEle("btnThemNV").addEventListener("click", function() {
     if(dsnv.validation(nhanVien)) {
         dsnv.themNhanVien(nhanVien);
         var url = pageURL();
-        renderTable(dsnv.sortNV(url.search), url.search, true);
+        renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
     }
 });
