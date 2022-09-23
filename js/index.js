@@ -298,7 +298,7 @@ function quickEditInfo (tk, index) {
         table.querySelectorAll(".editChucVu option")[3].setAttribute("selected", "selected");
     }
     table.cells[7].innerHTML = `
-        <button class="btn btn-info" onclick="callEditModal('${tk}', ${index})" data-toggle="modal"
+        <button class="btn btn-info" onclick="callEditModal('${tk}')" data-toggle="modal"
         data-target="#myModal"><i class="fa-solid fa-user-pen"></i></button>
         <button class="btn btn-success" onclick="quickEdit('${tk}', ${index})"><i class="fa-solid fa-check"></i></button>
     `;
@@ -359,7 +359,7 @@ getEle("btnThemNV").addEventListener("click", function() {
     }
 });
 
-function callEditModal (tk, index) {
+function callEditModal (tk) {
     var capNhatNV = dsnv.layThongTinNV(tk);
     getEle("tknv").value = capNhatNV.taiKhoan;
     getEle("name").value = capNhatNV.hoTen;
