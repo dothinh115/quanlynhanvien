@@ -356,6 +356,10 @@ getEle("btnThemNV").addEventListener("click", function() {
         var url = pageURL();
         renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
+        var lastRow = pagination(dsnv.sortNV(url.search));
+        if(lastRow.lastPageItem == 1) {
+            window.location.replace("./?search=" + url.search + "&page=" + lastRow.page);
+        }
     }
 });
 
