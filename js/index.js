@@ -95,9 +95,9 @@ function pagination (arr) {
     return paginationInfo;
 }
 
-function createRow (arr, number, isObject) {
+function createRow (arr, number, isMultiObject) {
     var row;
-    if(isObject) {
+    if(isMultiObject) {
         row = `
             <tr id="rowIndex__${number}">
             <td>${arr[number].taiKhoan}</td>
@@ -237,23 +237,30 @@ function renderTable (arr, urlData) {
 function xoaNhanVien (tk, index) {
     var table = getEle("rowIndex__" + index);
     table.cells[7].innerHTML = `
-        <button class="btn btn-primary" onclick="this.remove();quickEditInfo('${tk}', ${index})"><i class="fa-solid fa-pen-to-square"></i></button>
-        <button class="btn btn-warning" onclick="xoaNhanVienConfirmed('${tk}')"><i class="fa-solid fa-check"></i></button>
+        <button class="btn btn-secondary" onclick="xoaNhanVienCancel('${tk}', ${index})"><i class="fa-solid fa-xmark"></i></button>
+        <button class="btn btn-success" onclick="xoaNhanVienConfirmed('${tk}')"><i class="fa-solid fa-check"></i></button>
     `;
     
 }
 
 function xoaNhanVienConfirmed (tk) {
     var url = pageURL();
+    var paGi = pagination(dsnv.sortNV(url.search));
     dsnv.xoaNhanVien(tk);
     setLocalStorage();
-    var paGi = pagination(dsnv.sortNV(url.search));
     if(paGi.total%paGi.perPage === 0) {
         window.location.replace("./?search=" + url.search + "&page=" + paGi.page);
     }
     else {
         renderTable(dsnv.sortNV(url.search), url.search);
     }
+}
+
+function xoaNhanVienCancel (tk, index) {
+    var table = getEle("rowIndex__" + index);
+    var thongTinNV = dsnv.layThongTinNV(tk);
+    url = pageURL();
+    table.innerHTML = createRow(thongTinNV, index, false);
 }
 
 function quickEditInfo (tk, index) {
