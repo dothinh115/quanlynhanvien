@@ -5,8 +5,6 @@ function getEle (id) {
 var dsnv = new DSNV();
 
 window.addEventListener("load", function() {
-    getLocalStorage();
-    nhacNho();
     var url = window.location.href;
     var urlData = url.split("?search=")[1];
     if(urlData == undefined) {
@@ -19,6 +17,8 @@ window.addEventListener("load", function() {
             window.location.replace("./?search=" + urlSearch + "&page=1");
         }
     }
+    getLocalStorage();
+    nhacNho();
 });
 
 
