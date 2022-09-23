@@ -352,7 +352,7 @@ getEle("btnThemNV").addEventListener("click", function() {
     if(dsnv.validation(nhanVien)) {
         dsnv.themNhanVien(nhanVien);
         var url = pageURL();
-        renderTable(dsnv.sortNV(url.search), url.search);
+        renderTable(dsnv.sortNV(url.search), url.search, true);
         setLocalStorage();
     }
 });
