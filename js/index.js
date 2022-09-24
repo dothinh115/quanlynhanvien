@@ -348,7 +348,7 @@ function getLocalStorage () {
         getEle("searchName").querySelectorAll("option")[url.search].setAttribute("selected", "selected");
     }
     
-    if(JSON.parse(data).length == 0) {
+    if(JSON.parse(data).length == 0 || !data) {
         getEle("duLieu").style.display = "block";
         getEle("duLieu").addEventListener("click", function() {
             getEle("dataTextaria").style.display = "block";
