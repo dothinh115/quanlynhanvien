@@ -374,10 +374,10 @@ function callEditModal (tk) {
     if(capNhatNV.chucVu == "Nhân viên") {
         getEle("chucvu").querySelectorAll("option")[1].setAttribute("selected", "selected");
     }
-    else if (chucVu == "Trưởng phòng") {
+    else if (capNhatNV.chucVu == "Trưởng phòng") {
         getEle("chucvu").querySelectorAll("option")[2].setAttribute("selected", "selected");
     }
-    else if (chucVu == "Sếp") {
+    else if (capNhatNV.chucVu == "Sếp") {
         getEle("chucvu").querySelectorAll("option")[3].setAttribute("selected", "selected");
     }
     getEle("gioLam").value = capNhatNV.gioLam;
