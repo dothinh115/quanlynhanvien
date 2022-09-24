@@ -289,13 +289,13 @@ function quickEditInfo (tk, index) {
     `;
 
     if(chucVu == "Nhân viên") {
-        table.querySelectorAll(".editChucVu option")[1].setAttribute("selected", "selected");
+        table.querySelector(".editChucVu").selectedIndex = "1";
     }
     else if (chucVu == "Trưởng phòng") {
-        table.querySelectorAll(".editChucVu option")[2].setAttribute("selected", "selected");
+        table.querySelector(".editChucVu").selectedIndex = "2";
     }
     else if (chucVu == "Sếp") {
-        table.querySelectorAll(".editChucVu option")[3].setAttribute("selected", "selected");
+        table.querySelector(".editChucVu").selectedIndex = "3";
     }
     table.cells[7].innerHTML = `
         <button class="btn btn-info" onclick="callEditModal('${tk}')" data-toggle="modal"
@@ -347,6 +347,13 @@ function getLocalStorage () {
         renderTable(dsnv.sortNV(url.search), url.search);
         getEle("searchName").querySelectorAll("option")[url.search].setAttribute("selected", "selected");
     }
+    
+    if(JSON.parse(data).length == 0) {
+        getEle("duLieu").style.display = "block";
+        getEle("duLieu").addEventListener("click", function() {
+            getEle("dataTextaria").style.display = "block";
+        });
+    }
 }
 
 getEle("btnThemNV").addEventListener("click", function() {
@@ -357,7 +364,7 @@ getEle("btnThemNV").addEventListener("click", function() {
         renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
         var lastRow = pagination(dsnv.sortNV(url.search));
-        if(lastRow.lastPageItem == 1) {
+        if(lastRow.lastPageItem == 1 && lastRow.page != 1) {
             window.location.replace("./?search=" + url.search + "&page=" + lastRow.page);
         }
     }
@@ -366,19 +373,20 @@ getEle("btnThemNV").addEventListener("click", function() {
 function callEditModal (tk) {
     var capNhatNV = dsnv.layThongTinNV(tk);
     getEle("tknv").value = capNhatNV.taiKhoan;
+    getEle("tknv").disabled = true;
     getEle("name").value = capNhatNV.hoTen;
     getEle("email").value = capNhatNV.email;
     getEle("password").value = capNhatNV.matKhau;
     getEle("datepicker").value = capNhatNV.ngayLam;
     getEle("luongCB").value = capNhatNV.luongCoBan;
     if(capNhatNV.chucVu == "Nhân viên") {
-        getEle("chucvu").querySelectorAll("option")[1].setAttribute("selected", "selected");
+        getEle("chucvu").selectedIndex = "1";
     }
     else if (capNhatNV.chucVu == "Trưởng phòng") {
-        getEle("chucvu").querySelectorAll("option")[2].setAttribute("selected", "selected");
+        getEle("chucvu").selectedIndex = "2";
     }
     else if (capNhatNV.chucVu == "Sếp") {
-        getEle("chucvu").querySelectorAll("option")[3].setAttribute("selected", "selected");
+        getEle("chucvu").selectedIndex = "3";
     }
     getEle("gioLam").value = capNhatNV.gioLam;
     getEle("btnCapNhat").style.display = "inline";
@@ -403,9 +411,11 @@ getEle("btnTimNV").addEventListener("click", function(){
 getEle("btnThem").addEventListener("click", function() {
     getEle("btnCapNhat").style.display = "none";
     getEle("btnThemNV").style.display = "inline";
+    getEle("tknv").disabled = false;
     var modal = document.querySelector(".modal-body");
     var input = modal.querySelectorAll("input");
     input.forEach(function(item) {
         item.value = "";
     });
+    getEle("duLieu").style.display = "none";
 });
