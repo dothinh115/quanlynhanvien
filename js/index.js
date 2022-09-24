@@ -350,7 +350,7 @@ function getLocalStorage () {
     
     if(!data || JSON.parse(data).length == 0) {
         getEle("duLieu").style.display = "block";
-        getEle("duLieu").addEventListener("click", function() {
+        getEle("duLieu").querySelector("button").addEventListener("click", function() {
             getEle("dataTextaria").style.display = "block";
         });
     }
