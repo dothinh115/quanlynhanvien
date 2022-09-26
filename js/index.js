@@ -428,6 +428,6 @@ getEle("btnThem").addEventListener("click", function() {
 });
 
 function autoIDPicker () {
-    var nextID = dsnv.autoIDPicker(dsnv.arr);
+    var nextID = dsnv.autoIDPicker();
     getEle("tknv").value = nextID;
 }

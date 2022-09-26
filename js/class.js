@@ -353,25 +353,31 @@ function DSNV () {
     }
 
     //HÀM TỰ TẠO TÀI KHOẢN 
-    this.autoIDPicker = function (arr) {
-        var finalValue = "";
-        function numSort (a, b) {
-            return a.taiKhoan - b.taiKhoan;
-        }
-        arr = arr.sort(numSort);
-        if(arr.length == 0) {
-            finalValue = "0001";
-        }
-        else { 
-            var taiKhoan = arr[arr.length - 1].taiKhoan;
-            for (var i = 0; i < 4; i++) {
-                var char = taiKhoan.charAt(i);
-                if(char == 0) {
-                    finalValue += "0";
-                }
+    this.autoIDPicker = function () {
+        var min = 0;
+        var max = 999999;
+        //HÀM TẠO SỐ RANDOM TỪ MIN - MAX
+        function getRandomID (min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            var randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+            //KIỂM TRA ĐỘ DÀI CỦA SỐ, NẾU DƯỚI 4 THÌ PHẢI THÊM 0 VÀO CHO ĐỦ 4
+            var length = String(randomNumber).length;
+            while(length < 4) {
+                randomNumber = "0" + randomNumber;
+                length = length.length;
             }
-            finalValue += (Number(taiKhoan) + 1);
-        }   
-        return finalValue;
+            return randomNumber;
+        }
+        //LẤY SỐ RANDOM
+        var newID = getRandomID(min, max);
+
+        //TÌM TRONG MẢNG XEM CÓ TÀI KHOẢN TRÙNG KO
+        while (this.layThongTinNV(newID) != undefined) {
+            //NẾU CÓ THÌ TIẾP TỤC GỌI RANDOM RA SỐ KHÁC
+            newID = getRandomID(min, max);
+        }
+
+        return newID;
     }
 }
