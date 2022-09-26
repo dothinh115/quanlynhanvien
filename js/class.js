@@ -141,7 +141,7 @@ function DSNV () {
         }
         else if (ngay < 1 || ngay > 31 || thang < 1 || thang > 12) {
             dateCheckResult = false;
-            notiMess = "Nhập ngày tháng cho hợp lý!";
+            notiMess = "Nhập ngày tháng cho hợp lý! Định dạng mm/dd/yyyy!";
         }
         else if (thang == 2) {
             if(nam%4 === 0) { //năm nhuận
@@ -150,7 +150,6 @@ function DSNV () {
             else {
                 ngay > 28 ? dateCheckResult = true : dateCheckResult = false;
             }
-            notiMess = "Nhập ngày tháng cho hợp lý!";
         }
         if(dateCheckResult) {
             getEle("tbNgay").style.display = "none";
@@ -351,5 +350,28 @@ function DSNV () {
             });
         }
         return filter;
+    }
+
+    //HÀM TỰ TẠO TÀI KHOẢN 
+    this.autoIDPicker = function (arr) {
+        var finalValue = "";
+        function numSort (a, b) {
+            return a.taiKhoan - b.taiKhoan;
+        }
+        arr = arr.sort(numSort);
+        if(arr.length == 0) {
+            finalValue = "0001";
+        }
+        else { 
+            var taiKhoan = arr[arr.length - 1].taiKhoan;
+            for (var i = 0; i < 4; i++) {
+                var char = taiKhoan.charAt(i);
+                if(char == 0) {
+                    finalValue += "0";
+                }
+            }
+            finalValue += (Number(taiKhoan) + 1);
+        }   
+        return finalValue;
     }
 }

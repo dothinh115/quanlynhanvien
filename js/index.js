@@ -371,6 +371,11 @@ getEle("btnThemNV").addEventListener("click", function() {
 });
 
 function callEditModal (tk) {
+    getEle("btnAutoPicker").style.display = "none";
+    var thongBao = document.querySelectorAll(".sp-thongbao");
+    thongBao.forEach(function(item) {
+        item.style.display = "none";
+    })
     var capNhatNV = dsnv.layThongTinNV(tk);
     getEle("tknv").value = capNhatNV.taiKhoan;
     getEle("tknv").disabled = true;
@@ -400,6 +405,7 @@ getEle("btnCapNhat").addEventListener("click", function() {
         var url = pageURL();
         renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
+        alert("Cập nhật thành công");
     }
 });
 
@@ -412,6 +418,7 @@ getEle("btnThem").addEventListener("click", function() {
     getEle("btnCapNhat").style.display = "none";
     getEle("btnThemNV").style.display = "inline";
     getEle("tknv").disabled = false;
+    getEle("btnAutoPicker").style.display = "inline";
     var modal = document.querySelector(".modal-body");
     var input = modal.querySelectorAll("input");
     input.forEach(function(item) {
@@ -419,3 +426,8 @@ getEle("btnThem").addEventListener("click", function() {
     });
     getEle("duLieu").style.display = "none";
 });
+
+function autoIDPicker () {
+    var nextID = dsnv.autoIDPicker(dsnv.arr);
+    getEle("tknv").value = nextID;
+}

@@ -6,9 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Quản lý nhân viên</title>
 
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 	<!-- Bootstrap 4 -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 
@@ -245,6 +242,7 @@
 								</div>
 								<input type="text" name="tk" id="tknv" class="form-control input-sm"
 									placeholder="Tài khoản">
+								<button class="btn btn-info" id="btnAutoPicker" onclick="autoIDPicker();return false;">Auto</button>
 							</div>
 							<span class="sp-thongbao" id="tbTKNV"></span>
 						</div>
@@ -328,7 +326,7 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
-					<button id="btnThemNV" type="button" class="btn btn-success" data-dismiss="modal">Thêm</button>
+					<button id="btnThemNV" type="button" class="btn btn-success">Thêm</button>
 					<button id="btnCapNhat" type="button" class="btn btn-success" style="display:none;">Cập nhật</button>
 					<button id="btnDong" type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>
 				</div>
