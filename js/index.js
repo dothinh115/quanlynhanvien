@@ -423,8 +423,13 @@ getEle("btnThem").addEventListener("click", function() {
     getEle("btnAutoPicker").style.display = "inline";
     var modal = document.querySelector(".modal-body");
     var input = modal.querySelectorAll("input");
-    input.forEach(function(item) {
-        item.value = "";
+    input.forEach(function(item, index) {
+        if(index == 4) {
+            item = new Date().today();
+        }
+        else {
+            item.value = "";
+        }
     });
     getEle("duLieu").style.display = "none";
 });
