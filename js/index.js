@@ -425,7 +425,7 @@ getEle("btnThem").addEventListener("click", function() {
     var input = modal.querySelectorAll("input");
     input.forEach(function(item, index) {
         if(index == 4) {
-            item = new Date().today();
+            item.value = new Date().today();
         }
         else {
             item.value = "";
