@@ -359,7 +359,9 @@ function getLocalStorage () {
 getEle("btnThemNV").addEventListener("click", function() {
     var nhanVien = thongTinNV();
     if(dsnv.validation(nhanVien)) {
-        dsnv.themNhanVien(nhanVien);
+        if(dsnv.themNhanVien(nhanVien)){
+            getEle("btnDong").click();
+        }
         var url = pageURL();
         renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
@@ -405,7 +407,7 @@ getEle("btnCapNhat").addEventListener("click", function() {
         var url = pageURL();
         renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
-        alert("Cập nhật thành công");
+        getEle("btnDong").click();
     }
 });
 

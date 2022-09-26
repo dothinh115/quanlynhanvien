@@ -207,17 +207,20 @@ function DSNV () {
 
     //HÀM THÊM NHÂN VIÊN
     this.themNhanVien = function (nhanVienArr) {
+        var success = false;
         //KIỂM TRA TÀI KHOẢN ĐÃ TỒN TẠI
         var validCheck = this.arr.find(function(sort) {
             return sort.taiKhoan == nhanVienArr.taiKhoan;
         });
         if(validCheck == undefined) {
             this.arr.push(nhanVienArr);
+            success = true;
         }
         else {
             getEle("tbTKNV").style.display = "block";
             getEle("tbTKNV").innerText = "Tài khoản đã tồn tại!";
         }
+        return success;
     }
 
     //HÀM XÓA NHÂN VIÊN
