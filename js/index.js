@@ -366,7 +366,7 @@ getEle("btnThemNV").addEventListener("click", function() {
         renderTable(dsnv.sortNV(url.search), url.search);
         setLocalStorage();
         var lastRow = pagination(dsnv.sortNV(url.search));
-        if(lastRow.lastPageItem == 1 && lastRow.page != 1) {
+        if(lastRow.page != url.page) {
             window.location.replace("./?search=" + url.search + "&page=" + lastRow.page);
         }
     }
