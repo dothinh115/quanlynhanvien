@@ -239,8 +239,7 @@ function xoaNhanVien (tk, index) {
     table.cells[7].innerHTML = `
         <button class="btn btn-secondary" onclick="xoaNhanVienCancel('${tk}', ${index})"><i class="fa-solid fa-xmark"></i></button>
         <button class="btn btn-success" onclick="xoaNhanVienConfirmed('${tk}')"><i class="fa-solid fa-check"></i></button>
-    `;
-    
+    `; 
 }
 
 function xoaNhanVienConfirmed (tk) {
@@ -411,7 +410,7 @@ getEle("btnCapNhat").addEventListener("click", function() {
     }
 });
 
-getEle("btnTimNV").addEventListener("click", function(){
+getEle("searchName").addEventListener("change", function(){
     var searchValue = getEle("searchName").value;
     window.location.replace("./?search=" + searchValue + "&page=1");
 });
